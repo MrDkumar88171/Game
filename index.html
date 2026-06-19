@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0A0E0A" />
+<title>Battle Legends 4v4</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Teko:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- ============================= SPLASH ============================= -->
+<section id="screen-splash" class="screen active">
+  <div class="splash-bg"></div>
+  <div class="hex-grid"></div>
+  <div class="splash-content">
+    <div class="splash-logo">
+      <svg viewBox="0 0 120 120" class="logo-mark">
+        <polygon points="60,6 110,33 110,87 60,114 10,87 10,33" class="logo-hex"/>
+        <polygon points="60,26 90,42 90,78 60,94 30,78 30,42" class="logo-hex-inner"/>
+        <path d="M44 64 L56 76 L80 46" class="logo-check"/>
+      </svg>
+      <h1 class="splash-title">BATTLE<span>LEGENDS</span></h1>
+      <p class="splash-sub">4 V 4 TACTICAL ASSAULT</p>
+    </div>
+    <div class="splash-loader">
+      <div class="splash-loader-track"><div id="splash-bar" class="splash-loader-fill"></div></div>
+      <p id="splash-status" class="splash-status">INITIALIZING ARSENAL…</p>
+    </div>
+  </div>
+  <p class="splash-footer">© BATTLE LEGENDS STUDIOS</p>
+</section>
+
+<!-- ============================= LOGIN ============================= -->
+<section id="screen-login" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <svg viewBox="0 0 120 120" class="logo-mark small"><polygon points="60,6 110,33 110,87 60,114 10,87 10,33" class="logo-hex"/><polygon points="60,26 90,42 90,78 60,94 30,78 30,42" class="logo-hex-inner"/></svg>
+      <h2>BATTLE LEGENDS</h2>
+    </div>
+    <div class="glass-card">
+      <h3 class="card-title">Welcome back, Operator</h3>
+      <p class="card-sub">Sign in to deploy</p>
+      <form id="form-login" class="auth-form">
+        <label class="field">
+          <span>Email</span>
+          <input type="email" id="login-email" placeholder="you@example.com" required />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" id="login-password" placeholder="••••••••" required minlength="6" />
+        </label>
+        <p id="login-error" class="form-error"></p>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+        <button type="button" class="link-btn" data-goto="screen-forgot">Forgot password?</button>
+      </form>
+      <div class="auth-switch">No account? <button type="button" class="link-btn strong" data-goto="screen-register">Create one</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= REGISTER ============================= -->
+<section id="screen-register" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <svg viewBox="0 0 120 120" class="logo-mark small"><polygon points="60,6 110,33 110,87 60,114 10,87 10,33" class="logo-hex"/><polygon points="60,26 90,42 90,78 60,94 30,78 30,42" class="logo-hex-inner"/></svg>
+      <h2>BATTLE LEGENDS</h2>
+    </div>
+    <div class="glass-card">
+      <h3 class="card-title">Become an Operator</h3>
+      <p class="card-sub">Create your account</p>
+      <form id="form-register" class="auth-form">
+        <label class="field">
+          <span>Username</span>
+          <input type="text" id="reg-username" placeholder="CallSign" required minlength="3" />
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" id="reg-email" placeholder="you@example.com" required />
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input type="password" id="reg-password" placeholder="••••••••" required minlength="6" />
+        </label>
+        <label class="field">
+          <span>Confirm Password</span>
+          <input type="password" id="reg-confirm" placeholder="••••••••" required minlength="6" />
+        </label>
+        <p id="register-error" class="form-error"></p>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+      <div class="auth-switch">Already enlisted? <button type="button" class="link-btn strong" data-goto="screen-login">Sign in</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= FORGOT PASSWORD ============================= -->
+<section id="screen-forgot" class="screen auth-screen">
+  <div class="auth-wrap">
+    <div class="auth-brand">
+      <svg viewBox="0 0 120 120" class="logo-mark small"><polygon points="60,6 110,33 110,87 60,114 10,87 10,33" class="logo-hex"/><polygon points="60,26 90,42 90,78 60,94 30,78 30,42" class="logo-hex-inner"/></svg>
+      <h2>BATTLE LEGENDS</h2>
+    </div>
+    <div class="glass-card">
+
+      <div id="forgot-step-email" class="forgot-step">
+        <h3 class="card-title">Reset Password</h3>
+        <p class="card-sub">Enter your email to receive a code</p>
+        <form id="form-forgot-email" class="auth-form">
+          <label class="field">
+            <span>Email</span>
+            <input type="email" id="forgot-email" placeholder="you@example.com" required />
+          </label>
+          <p id="forgot-email-error" class="form-error"></p>
+          <button type="submit" class="btn btn-primary">Send Code</button>
+        </form>
+      </div>
+
+      <div id="forgot-step-otp" class="forgot-step hidden">
+        <h3 class="card-title">Verify Code</h3>
+        <p class="card-sub">Enter the 6-digit code sent to your email</p>
+        <form id="form-forgot-otp" class="auth-form">
+          <label class="field">
+            <span>Verification Code</span>
+            <input type="text" id="forgot-otp" placeholder="123456" maxlength="6" required />
+          </label>
+          <p id="forgot-otp-hint" class="form-hint"></p>
+          <p id="forgot-otp-error" class="form-error"></p>
+          <button type="submit" class="btn btn-primary">Verify</button>
+        </form>
+      </div>
+
+      <div id="forgot-step-reset" class="forgot-step hidden">
+        <h3 class="card-title">Set New Password</h3>
+        <p class="card-sub">Choose a strong password</p>
+        <form id="form-forgot-reset" class="auth-form">
+          <label class="field">
+            <span>New Password</span>
+            <input type="password" id="forgot-new-password" placeholder="••••••••" required minlength="6" />
+          </label>
+          <p id="forgot-reset-error" class="form-error"></p>
+          <button type="submit" class="btn btn-primary">Reset Password</button>
+        </form>
+      </div>
+
+      <div class="auth-switch"><button type="button" class="link-btn strong" data-goto="screen-login">Back to Sign In</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= LOBBY ============================= -->
+<section id="screen-lobby" class="screen">
+  <canvas id="lobby-canvas"></canvas>
+
+  <div class="lobby-topbar hud-panel">
+    <div class="profile-chip">
+      <div class="avatar-ring"><span id="lobby-avatar-initial">O</span></div>
+      <div class="profile-meta">
+        <span id="lobby-username" class="profile-name">Operator</span>
+        <div class="level-row">
+          <span class="level-badge">LV <b id="lobby-level">1</b></span>
+          <span id="lobby-rank" class="rank-chip">Bronze IV</span>
+        </div>
+      </div>
+    </div>
+    <div class="currency-row">
+      <div class="currency-chip"><span class="ico-coin"></span><span id="lobby-coins">500</span></div>
+      <div class="currency-chip"><span class="ico-diamond"></span><span id="lobby-diamonds">20</span></div>
+      <button id="btn-logout" class="icon-btn" title="Sign out">⎋</button>
+    </div>
+  </div>
+
+  <div class="lobby-hint">Swipe to rotate • Pinch to zoom</div>
+
+  <div class="lobby-bottom">
+    <button class="btn btn-deploy" id="btn-start-match">
+      <span class="deploy-label">START MATCH</span>
+      <span class="deploy-sub">4v4 TEAM DEATHMATCH</span>
+    </button>
+    <nav class="lobby-nav">
+      <button class="nav-btn" data-modal="modal-inventory"><span class="nav-ico">🎒</span>Inventory</button>
+      <button class="nav-btn" data-modal="modal-profile"><span class="nav-ico">🪪</span>Profile</button>
+      <button class="nav-btn" data-modal="modal-shop"><span class="nav-ico">🛒</span>Shop</button>
+      <button class="nav-btn" data-modal="modal-leaderboard"><span class="nav-ico">🏆</span>Ranks</button>
+      <button class="nav-btn" data-modal="modal-settings"><span class="nav-ico">⚙</span>Settings</button>
+    </nav>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+
+  <div class="modal hud-panel" id="modal-inventory">
+    <div class="modal-head"><h3>Inventory</h3><button class="modal-close">✕</button></div>
+    <div class="weapon-grid" id="inventory-grid"></div>
+  </div>
+
+  <div class="modal hud-panel" id="modal-profile">
+    <div class="modal-head"><h3>Profile</h3><button class="modal-close">✕</button></div>
+    <div class="profile-stats" id="profile-stats"></div>
+  </div>
+
+  <div class="modal hud-panel" id="modal-shop">
+    <div class="modal-head"><h3>Shop</h3><button class="modal-close">✕</button></div>
+    <div class="shop-grid" id="shop-grid"></div>
+  </div>
+
+  <div class="modal hud-panel" id="modal-leaderboard">
+    <div class="modal-head"><h3>Leaderboard</h3><button class="modal-close">✕</button></div>
+    <div class="leaderboard-list" id="leaderboard-list"></div>
+  </div>
+
+  <div class="modal hud-panel" id="modal-settings">
+    <div class="modal-head"><h3>Settings</h3><button class="modal-close">✕</button></div>
+    <div class="settings-list">
+      <label class="settings-row"><span>Music Volume</span><input type="range" id="setting-music" min="0" max="100" value="60"/></label>
+      <label class="settings-row"><span>SFX Volume</span><input type="range" id="setting-sfx" min="0" max="100" value="80"/></label>
+      <label class="settings-row"><span>Sensitivity</span><input type="range" id="setting-sens" min="1" max="10" value="5"/></label>
+      <label class="settings-row toggle-row"><span>Aim Assist</span><input type="checkbox" id="setting-aim-assist" checked/></label>
+      <label class="settings-row toggle-row"><span>Graphics: High</span><input type="checkbox" id="setting-graphics" checked/></label>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= MATCHMAKING ============================= -->
+<section id="screen-matchmaking" class="screen">
+  <div class="hex-grid"></div>
+  <div class="mm-content">
+    <div class="radar">
+      <div class="radar-ring"></div>
+      <div class="radar-ring r2"></div>
+      <div class="radar-sweep"></div>
+      <div class="radar-core"></div>
+    </div>
+    <h2 class="mm-title" id="mm-title">SEARCHING FOR PLAYERS</h2>
+    <p class="mm-sub" id="mm-sub">Estimated wait: <span id="mm-wait">~8s</span></p>
+    <div class="mm-teams">
+      <div class="mm-team">
+        <span class="mm-team-label team-a">TEAM A</span>
+        <div class="mm-slots" id="mm-slots-a"></div>
+      </div>
+      <div class="mm-vs">VS</div>
+      <div class="mm-team">
+        <span class="mm-team-label team-b">TEAM B</span>
+        <div class="mm-slots" id="mm-slots-b"></div>
+      </div>
+    </div>
+    <button class="btn btn-ghost" id="btn-cancel-search">Cancel</button>
+  </div>
+</section>
+
+<!-- ============================= GAME ============================= -->
+<section id="screen-game" class="screen">
+  <canvas id="game-canvas"></canvas>
+
+  <div class="hud" id="hud">
+    <!-- TOP -->
+    <div class="hud-top">
+      <div class="score-pill team-a"><span class="score-team-tag">A</span><span id="score-a">0</span></div>
+      <div class="match-timer" id="match-timer">08:00</div>
+      <div class="score-pill team-b"><span id="score-b">0</span><span class="score-team-tag">B</span></div>
+    </div>
+
+    <!-- LEFT: minimap -->
+    <div class="minimap hud-panel">
+      <canvas id="minimap-canvas" width="160" height="160"></canvas>
+    </div>
+
+    <!-- RIGHT: kill feed -->
+    <div class="kill-feed" id="kill-feed"></div>
+
+    <!-- center hit marker / crosshair -->
+    <div class="crosshair" id="crosshair">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="hit-marker" id="hit-marker"></div>
+    <div class="damage-vignette" id="damage-vignette"></div>
+    <div class="kill-banner" id="kill-banner"></div>
+
+    <!-- BOTTOM: health / armor / ammo -->
+    <div class="status-bars">
+      <div class="bar-row">
+        <span class="bar-ico hp">♥</span>
+        <div class="bar-track"><div class="bar-fill hp-fill" id="hp-fill"></div></div>
+        <span class="bar-val" id="hp-val">100</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-ico ar">▣</span>
+        <div class="bar-track"><div class="bar-fill ar-fill" id="ar-fill"></div></div>
+        <span class="bar-val" id="ar-val">100</span>
+      </div>
+    </div>
+    <div class="ammo-display" id="ammo-display">
+      <span id="ammo-current">30</span><span class="ammo-slash">/</span><span id="ammo-reserve">90</span>
+      <span class="weapon-name" id="weapon-name-display">M416</span>
+    </div>
+
+    <!-- Mobile controls -->
+    <div class="joystick-zone" id="joystick-zone">
+      <div class="joystick-base"><div class="joystick-knob" id="joystick-knob"></div></div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="ctrl-btn ctrl-jump" id="btn-jump">JUMP</button>
+      <button class="ctrl-btn ctrl-crouch" id="btn-crouch">CROUCH</button>
+      <button class="ctrl-btn ctrl-reload" id="btn-reload">RELOAD</button>
+      <button class="ctrl-btn ctrl-weapon" id="btn-weapon-switch">SWAP</button>
+      <button class="ctrl-btn ctrl-grenade" id="btn-grenade">NADE</button>
+      <button class="ctrl-btn ctrl-medkit" id="btn-medkit">MEDKIT</button>
+    </div>
+
+    <button class="aim-btn" id="btn-aim">AIM</button>
+    <button class="fire-btn" id="btn-fire">FIRE</button>
+
+    <div class="reload-spinner hidden" id="reload-spinner">RELOADING…</div>
+  </div>
+</section>
+
+<!-- ============================= RESULT ============================= -->
+<section id="screen-result" class="screen">
+  <div class="hex-grid"></div>
+  <div class="result-content">
+    <h1 class="result-banner" id="result-banner">VICTORY</h1>
+    <p class="result-mvp" id="result-mvp">MVP: —</p>
+    <div class="result-stats-grid">
+      <div class="result-stat"><span class="rs-val" id="rs-kills">0</span><span class="rs-label">Kills</span></div>
+      <div class="result-stat"><span class="rs-val" id="rs-deaths">0</span><span class="rs-label">Deaths</span></div>
+      <div class="result-stat"><span class="rs-val" id="rs-assists">0</span><span class="rs-label">Assists</span></div>
+      <div class="result-stat"><span class="rs-val" id="rs-accuracy">0%</span><span class="rs-label">Accuracy</span></div>
+    </div>
+    <div class="result-rewards">
+      <div class="reward-chip"><span class="ico-xp"></span>+<span id="rs-xp">0</span> XP</div>
+      <div class="reward-chip"><span class="ico-coin"></span>+<span id="rs-coins">0</span></div>
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btn-play-again">Play Again</button>
+      <button class="btn btn-ghost" id="btn-return-lobby">Return to Lobby</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast" class="toast"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
